@@ -13,7 +13,7 @@ const FeeComponentsSchema = new Schema({
 });
 
 // Define the main Student schema
-const StudentSchema = new Schema({
+export const StudentSchema = new Schema({
   fullName: {
     type: String,
     required: true,
@@ -40,6 +40,11 @@ const StudentSchema = new Schema({
     type: FeeComponentsSchema,
     required: true,
   },
+  success:{
+    type: Boolean,
+    required: true,
+    default: false
+  }
 });
 
 // Export the Mongoose model

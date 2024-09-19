@@ -27,7 +27,7 @@ export class StudentRepository {
     return this.toDomain(studentDocument); 
   }
 
-  async update(id: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
+  async update(id: string, updateStudentDto: Partial<UpdateStudentDto>| {success:boolean}): Promise<Student> {
     const updatedStudent = await this.studentModel.findByIdAndUpdate(id, updateStudentDto, { new: true }).exec();
     return this.toDomain(updatedStudent); 
   }
