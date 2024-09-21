@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Cron } from '@nestjs/schedule';
-import { Model } from 'mongoose';
 import { JodoService } from 'src/modules/jodo/jodo.service';
 import { StudentRepository } from 'src/modules/student/repositories/student.repository';
-import { StudentDocument } from 'src/modules/student/schemas/student.schema';
 
 @Injectable()
 export class RetryService {
