@@ -12,6 +12,7 @@ export class Student {
 		component_type: string;
 		amount: number;
 	};
+	success?: boolean;
 
 	constructor(props: Student) {
 		Object.assign(this, props);

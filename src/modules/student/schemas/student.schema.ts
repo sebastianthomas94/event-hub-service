@@ -64,4 +64,5 @@ export interface StudentDocument extends Document {
     component_type: string;
     amount: number;
   };
+  success: boolean
 }

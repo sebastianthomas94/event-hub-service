@@ -9,38 +9,42 @@ import { Student } from '../entities/student.entity';
 export class StudentRepository {
   constructor(
     @InjectModel('Student') private readonly studentModel: Model<StudentDocument>,
-  ) {}
+  ) { }
 
   async create(createStudentDto: CreateStudentDto): Promise<Student> {
     const newStudent = new this.studentModel(createStudentDto);
     const studentDocument = await newStudent.save();
-    return this.toDomain(studentDocument); 
+    return this.toDomain(studentDocument);
   }
 
   async findAll(): Promise<Student[]> {
     const studentDocuments = await this.studentModel.find().exec();
-    return studentDocuments.map(this.toDomain); 
+    return studentDocuments.map(this.toDomain);
   }
 
   async findOne(id: string): Promise<Student> {
     const studentDocument = await this.studentModel.findById(id).exec();
-    return this.toDomain(studentDocument); 
+    return this.toDomain(studentDocument);
+  }
+  async findOnePartial(data: Partial<Student>): Promise<Student[]> {
+    const studentDocuments = await this.studentModel.find(data).exec();
+    return studentDocuments.map(this.toDomain);
   }
 
-  async update(id: string, updateStudentDto: Partial<UpdateStudentDto>| {success:boolean}): Promise<Student> {
+  async update(id: string, updateStudentDto: Partial<UpdateStudentDto> | { success: boolean }): Promise<Student> {
     const updatedStudent = await this.studentModel.findByIdAndUpdate(id, updateStudentDto, { new: true }).exec();
-    return this.toDomain(updatedStudent); 
+    return this.toDomain(updatedStudent);
   }
 
   async remove(id: string): Promise<Student> {
     const deletedStudent = await this.studentModel.findByIdAndDelete(id).exec();
-    return this.toDomain(deletedStudent); 
+    return this.toDomain(deletedStudent);
   }
 
   toDomain(studentDocument: StudentDocument): Student {
     if (!studentDocument) return null;
-    
-    const { _id, fullName, identifier, grade, academicYearDuration, dob, fee_components } = studentDocument;
+
+    const { _id, fullName, identifier, grade, academicYearDuration, dob, fee_components, success } = studentDocument;
 
     return new Student({
       id: _id.toString(),
@@ -50,6 +54,7 @@ export class StudentRepository {
       academicYearDuration,
       dob,
       fee_components,
+      success
     });
   }
 }
